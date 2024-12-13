@@ -71,3 +71,7 @@ const newFunction = (array)=>{
 }
 const test = [...newFunction(courses),...newFunction(addedCourses)]
 console.log(test);
+
+import {prime} from './bai_tap_bo_sung.js'
+
+prime(5) ? console.log(" 5 là số nguyên tố ") : console.log("5 k phải là số nguyên tố")
