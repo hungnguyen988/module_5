@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {addStudent, getAll} from "./service/student";
 
-function AddComponent({handleIsLoading}) {
+const AddComponent=React.memo(({handleIsLoading})=>{
     const [student, setStudent] = useState({});
     const handleOnChange = (event) => {
         console.log(event.target.value);
@@ -22,6 +22,7 @@ function AddComponent({handleIsLoading}) {
 
     return (
         <>
+            {console.log('-----add run-------')}
             <input name={'id'} onChange={(event) => {
                 handleOnChange(event)
             }} placeholder={'nhập id'}/>
@@ -40,6 +41,7 @@ function AddComponent({handleIsLoading}) {
         </>
     )
 
-}
+})
+
 
 export default AddComponent
