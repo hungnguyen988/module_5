@@ -1,7 +1,12 @@
-import React, {useEffect, useRef, useState,useCallback} from "react";
-import {deleteById, getAll, searchByName} from "./service/student";
-import AddComponent from "./addComponent";
-import DeleteComponent from "./deleteComponent";
+import React, {useEffect, useRef, useState} from "react";
+
+import { getAll, searchByName} from "../service/student";
+
+import DeleteComponent from "./DeleteComponent";
+import {Link} from "react-router-dom";
+
+import '../css/list.css'
+
 
 
 function ListComponent() {
@@ -38,19 +43,16 @@ function ListComponent() {
 
     }
 
-    // const handleIsLoading = () => {
-    //     setIsLoading(pre => !pre)
-    // }
-
-    const handleIsLoading = useCallback(() => {
-        setIsLoading(pre => !pre);
-    }, []);
+    const handleIsLoading = () => {
+        setIsLoading(pre => !pre)
+    }
 
     return (
         <>
             {console.log('------list run--------')}
             <h1>DANH SÁCH HỌC SINH</h1>
-            <AddComponent handleIsLoading={handleIsLoading}/>
+            <Link   to="/addForm">Thêm mới học sinh</Link>
+
             <form>
                 <input ref={searchNameRef} placeholder={'nhập tên cần tìm'}/>
                 <button type={"button"} onClick={handleOnClickSearch}>Search</button>
@@ -62,7 +64,9 @@ function ListComponent() {
                     <th>Tên</th>
                     <th>Tuổi</th>
                     <th>Địa chỉ</th>
-                    <th>Hành động</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +79,19 @@ function ListComponent() {
                             <td>{student.address}</td>
                             <td>
                                 <button onClick={() => handleOnClickDelete(student)}>Xóa</button>
+
                             </td>
+                            <td>
+                                <Link to={`/student/detail/${student.id}`}>
+                                    <button>Xem chi tiết</button>
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to={`/student/edit/${student.id}`}>
+                                    <button>Sửa</button>
+                                </Link>
+                            </td>
+
                         </tr>
                     ))
                 }

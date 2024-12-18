@@ -1,7 +1,7 @@
 
 
 import  React from 'react'
-import {deleteById} from "./service/student";
+import {deleteById} from "../service/student";
 
 
 function DeleteComponent({isShowModal,deleteStudent,handleIsShowModal,handleIsLoading}) {

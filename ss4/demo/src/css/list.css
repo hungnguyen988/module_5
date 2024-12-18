@@ -1,0 +1,128 @@
+
+
+/* Toàn bộ body */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* Tiêu đề */
+h1 {
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form tìm kiếm */
+/*form {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+form input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Bảng */
+table {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    width: 90%;
+}
+
+thead {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+thead th {
+    text-align: center;
+    padding: 10px;
+}
+
+tbody td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Nút hành động */
+button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:focus {
+    outline: none;
+}
+
+button.delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+button.delete:hover {
+    background-color: #c82333;
+}
+
+button.detail {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+button.detail:hover {
+    background-color: #138496;
+}
+
+button.edit {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+button.edit:hover {
+    background-color: #e0a800;
+}
+
+/* Liên kết thêm mới */
+a {
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
