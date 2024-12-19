@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,11 +7,26 @@ import {searchById,updateStudent} from "../service/student.js";
 
 const EditComponent = () => {
     const navigate = useNavigate();
+    const [student, setStudent] = useState(null);
     const { id } = useParams();
-    const idStudent = parseInt(id);
-    const student = searchById(idStudent);
-    student.gender = student.gender === 1? "1" : "2"; // Chuyển giá trị gender sang dạng text
-    console.log(student)
+
+    useEffect(() => {
+        const fectchData = async () => {
+            const studentSearch = await searchById(id);
+            studentSearch.gender = studentSearch.gender === 1? "1" : "2"; // Chuyển giá trị gender sang dạng text
+            console.log("gender trước khi đưa vào uodate "+studentSearch.gender)
+            setStudent(studentSearch);
+        }
+        fectchData()
+    },[])
+
+
+
+
+
+
+    // student.gender = student.gender === 1? "1" : "2"; // Chuyển giá trị gender sang dạng text
+    // console.log(student)
 
     // Schema xác thực bằng Yup
     const validationSchema = Yup.object({
@@ -23,10 +38,11 @@ const EditComponent = () => {
         address: Yup.string().required("Địa chỉ không được để trống"),
     });
 
-    const handleOnSubmit = (values) => {
+    const handleOnSubmit = async (values) => {
         values.gender = values.gender === "1"? 1 : 2; // Chuyển giá trị gender sang dạng số
-        updateStudent(values); // Hàm cập nhật thông tin đối tượng
-        console.log(values)
+        console.log("trước khi update" +values.gender)
+
+       await  updateStudent(values);
         toast.success("Cập nhật học sinh thành công!", {
             position: "top-right",
             autoClose: 3000,

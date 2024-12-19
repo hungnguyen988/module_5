@@ -1,13 +1,10 @@
-import React, {useEffect, useRef, useState} from "react";
-
-import { getAll, searchByName} from "../service/student";
-
+import React, { useEffect, useRef, useState } from "react";
+import { searchByNameAndClassId } from "../service/student";
 import DeleteComponent from "./DeleteComponent";
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { Pagination } from "react-bootstrap";
 import '../css/list.css'
-
-
+import { getAllClasses } from "../service/classes";
 
 function ListComponent() {
     const [students, setStudents] = useState([]);
@@ -15,19 +12,53 @@ function ListComponent() {
     const [isShowModal, setIsShowModal] = useState(false);
     const [deleteStudent, setDeleteStudent] = useState({});
     const searchNameRef = useRef();
+    const searchClassIdRef = useRef();
+    const [classes, setClasses] = useState([]);
+    const [classId, setClassId] = useState("");
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    const [searchName, setSearchName] = useState('');
+    const [searchClassId, setSearchClassId] = useState('');
+
+    const pageSize = 2; // Số lượng mục trên mỗi trang
+
+    // Gọi API lấy dữ liệu
+    const fetchStudents = async () => {
+        try {
+            const response = await searchByNameAndClassId(searchName, searchClassId, currentPage, pageSize);
+            const list = response.list;
+            const total = response.total;
+            console.log("Total students from API:", total);
+            setTotalPage(total);
+            setStudents(list);
+        } catch (error) {
+            console.error("Error fetching students:", error);
+        }
+    };
 
     useEffect(() => {
-        console.log('-------effect run -------')
-        setStudents(prevState => [
-            ...getAll()
-        ])
-    }, [isLoading])
+        fetchStudents();
+    }, [searchName, searchClassId, currentPage]);
+
+    useEffect(() => {
+        const fetchClasses = async () => {
+            const list = await getAllClasses();
+            setClasses(list);
+        }
+        fetchClasses();
+    }, []);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     const handleOnClickDelete = (student) => {
         setDeleteStudent(() => ({
             ...student
-        }))
-        handleIsShowModal()
+        }));
+        handleIsShowModal();
     }
 
     const handleIsShowModal = () => {
@@ -35,35 +66,46 @@ function ListComponent() {
     }
 
     const handleOnClickSearch = () => {
-        let name = (searchNameRef.current.value)
-        let listSearch = searchByName(name);
-        setStudents(() => [
-            ...listSearch
-        ])
-
+        const name = searchNameRef.current.value;
+        const classId = searchClassIdRef.current.value;
+        setSearchName(name);
+        setSearchClassId(classId);
+        setCurrentPage(1); // Reset to first page when searching
     }
 
     const handleIsLoading = () => {
-        setIsLoading(pre => !pre)
+        setIsLoading(pre => !pre);
+    }
+
+    if (!Array.isArray(students)) {
+        return <h1>Loading...</h1>
     }
 
     return (
         <>
-            {console.log('------list run--------')}
             <h1>DANH SÁCH HỌC SINH</h1>
-            <Link   to="/addForm">Thêm mới học sinh</Link>
+            <Link to="/addForm">Thêm mới học sinh</Link>
 
-            <form>
-                <input ref={searchNameRef} placeholder={'nhập tên cần tìm'}/>
-                <button type={"button"} onClick={handleOnClickSearch}>Search</button>
-            </form>
+            <input ref={searchNameRef} placeholder={'nhập tên cần tìm'}/>
+            <select ref={searchClassIdRef}>
+                <option value="">Tất cả</option>
+                {
+                    classes.map((classs, index) => (
+                        <option key={index} value={classs.id}>{classs.name}</option>
+                    ))
+                }
+            </select>
+            <button type="button" onClick={handleOnClickSearch}>Tìm</button>
+
             <table className={' table table-striped table-hover table-bordered '}>
                 <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Id</th>
                     <th>Tên</th>
                     <th>Tuổi</th>
                     <th>Địa chỉ</th>
+                    <th>Tên lớp</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -74,12 +116,13 @@ function ListComponent() {
                     students.map((student, index) => (
                         <tr key={student.id}>
                             <td>{index + 1}</td>
+                            <td>{student.id}</td>
                             <td>{student.name}</td>
                             <td>{student.age}</td>
                             <td>{student.address}</td>
+                            <td>{student.class.name}</td>
                             <td>
                                 <button onClick={() => handleOnClickDelete(student)}>Xóa</button>
-
                             </td>
                             <td>
                                 <Link to={`/student/detail/${student.id}`}>
@@ -91,13 +134,32 @@ function ListComponent() {
                                     <button>Sửa</button>
                                 </Link>
                             </td>
-
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
-            <DeleteComponent  deleteStudent={deleteStudent} isShowModal={isShowModal} handleIsShowModal = {handleIsShowModal} handleIsLoading={handleIsLoading}/>
+           
+
+        <Pagination className="justify-content-center">
+    <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1}/>
+    <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}/>
+    {Array.from({length: totalPage}, (_, index) => index + 1).map(number => (
+        <Pagination.Item 
+            key={number} 
+            active={number === currentPage}
+            onClick={() => handlePageChange(number)}
+        >
+            {number}
+        </Pagination.Item>
+    ))}
+    <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPage}/>
+    <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage === totalPage}/>
+</Pagination>
+
+
+            <DeleteComponent deleteStudent={deleteStudent} isShowModal={isShowModal}
+                             handleIsShowModal={handleIsShowModal} handleIsLoading={handleIsLoading}/>
         </>
     );
 }

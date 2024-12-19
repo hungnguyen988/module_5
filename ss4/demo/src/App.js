@@ -4,7 +4,7 @@ import './App.css';
 import ListComponent from "./components/ListComponent";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeaderComponent from "./components/HeaderComponent";
-import HomeComponent from "./service/HomeComponent";
+import HomeComponent from "./components/HomeComponent";
 import AddComponent from "./components/AddComponent.js";
 import DetailComponent from "./components/DetailComponent.js";
 import EditComponent from "./components/EditComponent.js";

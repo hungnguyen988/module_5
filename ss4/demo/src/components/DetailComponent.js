@@ -1,11 +1,29 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {getAll, searchById} from "../service/student";
 
 function DetailComponent() {
     const {id} = useParams();
-    const productId = parseInt(id, 10);
-    const student = searchById(productId);
+    const studentId = parseInt(id);
+    console.log(studentId)
+    const [student, setStudent] = useState(null);
+
+    useEffect(() => {
+        console.log('-------effect run -------')
+        const fectchData = async () => {
+            const studentSearch = await searchById(studentId);
+            console.log(studentSearch)
+            setStudent(studentSearch);
+        }
+        fectchData()
+    },[studentId])
+
+
+    if (!student) {
+        return <div>Loading...</div>;
+    }
+
+
 
     return (
         <table>

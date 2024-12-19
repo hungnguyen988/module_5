@@ -1,59 +1,64 @@
-const students = [
-    {
-        id: 1,
-        name: 'Lưu',
-        age: 30,
-        gender: 1,
-        address: 'Quảng Nam'
-    },
-    {
-        id: 2,
-        name: 'Hưng',
-        age: 30,
-        gender: 1,
-        address: 'Quảng Nam'
-    },
-    {
-        id: 3,
-        name: 'Minh',
-        age: 30,
-        gender: 1,
-        address: 'Quảng Nam'
+import axios from "axios";
+
+
+
+
+
+export async function searchByNameAndClassId(name,classId,page,size) {
+    let url = `http://localhost:8080/students?name_like=${name}&class.id=${classId}&_sort=age&_order=asc&_page=${page }&_limit=${size}`
+    if (classId === '') {
+
+        url = `http://localhost:8080/students?name_like=${name}&_sort=age&_order=asc&_page=${page }&_limit=${size}`
     }
-]
+    try {
+        const response = await axios.get(url)
+        const totalCount = response.headers['x-total-count'];
 
-export function getAll() {
-    return students;
-}
-
-export function addStudent(student) {
-    students.push(student);
-}
-
-export function deleteById(id) {
-    for (let i = 0; i < students.length; i++) {
-        if (students[i].id === id) {
-            students.splice(i, 1);
-            break;
-        }
+        // Tổng số trang
+        const totalPages = Math.ceil(totalCount /size);
+        return {list: response.data, total : totalPages };
+    } catch (error) {
+        return null;
     }
 }
 
-export function searchByName(name) {
-    const lowerCaseName = name.toLowerCase();
-    return students.filter(student =>
-        student.name.toLowerCase().includes(lowerCaseName)
-    );
+
+export async function addStudent(student) {
+    try {
+        const response = await axios.post('http://localhost:8080/students',student)
+
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-export function searchById(id) {
-    return students.find(student => student.id === id);
+export async function deleteById(id) {
+    try {
+        console.log("id" +id)
+        const response = await axios.delete('http://localhost:8080/students/'+id)
+
+    } catch (error) {
+        console.error("lỗi"+error);
+    }
+}
+
+export async function searchById(id) {
+    try {
+        const response = await axios.get('http://localhost:8080/students/' + id)
+        return response.data;
+    } catch (error) {
+        return null;
+    }
 }
 
 
-export function updateStudent(student) {
-    const index = students.findIndex(s => s.id === student.id);
-    if (index !== -1) {
-        students[index] = student;
+
+
+export async function updateStudent(student) {
+    try {
+        const response = await axios.put('http://localhost:8080/students/' + student.id, student)
+
+    }catch (error) {
+        console.log(error);
     }
 }

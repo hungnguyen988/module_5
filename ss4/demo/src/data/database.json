@@ -1,0 +1,73 @@
+{
+  "students": [
+    {
+      "id": 2,
+      "name": "Hưng",
+      "age": 30,
+      "gender": 1,
+      "address": "huế",
+      "class": {
+        "id": 2,
+        "name": "javascript"
+      }
+    },
+    {
+      "name": "hiếu",
+      "age": 25,
+      "gender": 2,
+      "address": "huế",
+      "id": 4,
+      "class": {
+        "id": 1,
+        "name": "java"
+      }
+    },
+    {
+      "name": "đông",
+      "age": 25,
+      "gender": 1,
+      "address": "quảng nam",
+      "id": 6,
+      "class": {
+        "id": 1,
+        "name": "java"
+      }
+    },
+    {
+      "name": "minh",
+      "age": 30,
+      "gender": 2,
+      "address": "huế",
+      "class": {
+        "id": 1,
+        "name": "java"
+      },
+      "id": 7
+    },
+    {
+      "name": "lưu",
+      "age": 27,
+      "gender": 1,
+      "address": "quảng nam",
+      "class": {
+        "id": 3,
+        "name": "html"
+      },
+      "id": 8
+    }
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "name": "java"
+    },
+    {
+      "id": 2,
+      "name": "javascript"
+    },
+    {
+      "id": 3,
+      "name": "html"
+    }
+  ]
+}

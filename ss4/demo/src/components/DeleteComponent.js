@@ -6,8 +6,11 @@ import {deleteById} from "../service/student";
 
 function DeleteComponent({isShowModal,deleteStudent,handleIsShowModal,handleIsLoading}) {
 
-    const handleClickDelete = () => {
-        deleteById(deleteStudent.id)
+
+
+    const handleClickDelete = async () => {
+        console.log(deleteStudent.id)
+         await deleteById(deleteStudent.id)
         handleIsLoading()
         handleIsShowModal()
 
