@@ -1,0 +1,29 @@
+.error{
+    color: red;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-50 {
+    width: 50%;
+    max-width: 500px;
+}
+
+.form-50 .form-control {
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-group button {
+    width: 48%;
+}

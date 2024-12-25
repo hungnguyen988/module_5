@@ -1,8 +1,19 @@
-
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/AccountAction";
 
-function HeaderComponent(){
+function HeaderComponent() {
+    const user = useSelector(state => state.user);
+    const account = user ? user.account : null;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/');
+    }
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -24,15 +35,25 @@ function HeaderComponent(){
                             <li className="nav-item">
                                 <Link className="nav-link" to="/addForm">Thêm mới</Link>
                             </li>
-
                         </ul>
 
+                        {/* Các phần tử tài khoản và đăng nhập, đăng xuất */}
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                {!account && <Link className="nav-link" to="/login">Đăng nhập</Link>}
+                            </li>
+                            <li className="nav-item">
+                                {account && <button onClick={handleLogout} className="nav-link">Đăng xuất</button>}
+                            </li>
+                            <li className="nav-item">
+                                {account && <span className="nav-link">{account.username}</span>}
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </nav>
         </>
-
-    )
+    );
 }
 
 export default HeaderComponent;

@@ -22,12 +22,6 @@ const EditComponent = () => {
 
 
 
-
-
-
-    // student.gender = student.gender === 1? "1" : "2"; // Chuyển giá trị gender sang dạng text
-    // console.log(student)
-
     // Schema xác thực bằng Yup
     const validationSchema = Yup.object({
         name: Yup.string().required("Tên không được để trống"),

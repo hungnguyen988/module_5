@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { searchByNameAndClassId } from "../service/student";
+import React, {useEffect, useRef, useState} from "react";
+import {searchByNameAndClassId} from "../service/student";
 import DeleteComponent from "./DeleteComponent";
-import { Link } from "react-router-dom";
-import { Pagination } from "react-bootstrap";
+import {Link} from "react-router-dom";
+import {Pagination} from "react-bootstrap";
 import '../css/list.css'
-import { getAllClasses } from "../service/classes";
+import {getAllClasses} from "../service/classes";
+import {useSelector} from "react-redux";
 
 function ListComponent() {
     const [students, setStudents] = useState([]);
@@ -14,28 +15,27 @@ function ListComponent() {
     const searchNameRef = useRef();
     const searchClassIdRef = useRef();
     const [classes, setClasses] = useState([]);
-    const [classId, setClassId] = useState("");
+
 
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [searchName, setSearchName] = useState('');
     const [searchClassId, setSearchClassId] = useState('');
-
     const pageSize = 2; // Số lượng mục trên mỗi trang
+
+
+    const user = useSelector(state => state.user);
+    const account = user ? user.account : null;
 
     // Gọi API lấy dữ liệu
     const fetchStudents = async () => {
-        try {
-            const response = await searchByNameAndClassId(searchName, searchClassId, currentPage, pageSize);
-            const list = response.list;
-            const total = response.total;
-            console.log("Total students from API:", total);
-            setTotalPage(total);
-            setStudents(list);
-        } catch (error) {
-            console.error("Error fetching students:", error);
-        }
+        const response = await searchByNameAndClassId(searchName, searchClassId, currentPage, pageSize);
+        const list = response.list;
+        const total = response.total;
+        console.log("Total product from API:", total);
+        setTotalPage(total);
+        setStudents(list);
     };
 
     useEffect(() => {
@@ -107,8 +107,14 @@ function ListComponent() {
                     <th>Địa chỉ</th>
                     <th>Tên lớp</th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    {account && account.role === "ADMIN" && (
+                        <>
+                            <th></th>
+                            <th></th>
+                        </>
+                    )
+                    }
+
                 </tr>
                 </thead>
                 <tbody>
@@ -121,41 +127,49 @@ function ListComponent() {
                             <td>{student.age}</td>
                             <td>{student.address}</td>
                             <td>{student.class.name}</td>
-                            <td>
-                                <button onClick={() => handleOnClickDelete(student)}>Xóa</button>
-                            </td>
+                            {account && account.role === "ADMIN" && (
+                                <>
+                                    <td>
+                                        <button onClick={() => handleOnClickDelete(student)}>Xóa</button>
+                                    </td>
+                                    <td>
+                                        <Link to={`/student/edit/${student.id}`}>
+                                            <button>Sửa</button>
+                                        </Link>
+                                    </td>
+                                </>
+                            )
+                            }
+
                             <td>
                                 <Link to={`/student/detail/${student.id}`}>
                                     <button>Xem chi tiết</button>
                                 </Link>
                             </td>
-                            <td>
-                                <Link to={`/student/edit/${student.id}`}>
-                                    <button>Sửa</button>
-                                </Link>
-                            </td>
+
                         </tr>
                     ))
                 }
                 </tbody>
             </table>
-           
 
-        <Pagination className="justify-content-center">
-    <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1}/>
-    <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}/>
-    {Array.from({length: totalPage}, (_, index) => index + 1).map(number => (
-        <Pagination.Item 
-            key={number} 
-            active={number === currentPage}
-            onClick={() => handlePageChange(number)}
-        >
-            {number}
-        </Pagination.Item>
-    ))}
-    <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPage}/>
-    <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage === totalPage}/>
-</Pagination>
+
+            <Pagination className="justify-content-center">
+                <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1}/>
+                <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}/>
+                {Array.from({length: totalPage}, (_, index) => index + 1).map(number => (
+                    <Pagination.Item
+                        key={number}
+                        active={number === currentPage}
+                        onClick={() => handlePageChange(number)}
+                    >
+                        {number}
+                    </Pagination.Item>
+                ))}
+                <Pagination.Next onClick={() => handlePageChange(currentPage + 1)}
+                                 disabled={currentPage === totalPage}/>
+                <Pagination.Last onClick={() => handlePageChange(totalPage)} disabled={currentPage === totalPage}/>
+            </Pagination>
 
 
             <DeleteComponent deleteStudent={deleteStudent} isShowModal={isShowModal}

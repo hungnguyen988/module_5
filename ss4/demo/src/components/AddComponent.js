@@ -114,7 +114,7 @@ const AddComponent = () => {
                         <div className="form-group">
                             <label >Tên lớp:</label>
                             <Field className="form-control" as = "select" name="class" >
-                            <option value=''>-------select-------</option>
+                            {/*<option value=''>-------select-------</option>*/}
                             {
                                 classes.map(c => (
                                     <option key={c.id} value={JSON.stringify(c)}>{c.name}</option>

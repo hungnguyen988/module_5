@@ -1,0 +1,19 @@
+.home-page {
+    height: 100vh; /* Chiều cao toàn màn hình */
+    width: 100%;
+    background-image: url('https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2020/06/Review-Furama-Resort-Da-Nang-13.jpg'); /* URL ảnh */
+    background-size: contain; /* Đảm bảo ảnh vừa màn hình */
+    background-position: center; /* Căn giữa ảnh */
+    background-repeat: no-repeat; /* Không lặp lại ảnh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Thêm màu nền đen nếu ảnh không đủ lớn */
+}
+
+.home-page h1 {
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Hiệu ứng bóng chữ */
+    font-size: 3rem;
+    text-align: center;
+}

@@ -1,0 +1,40 @@
+/* Đặt các phần tử tài khoản sang bên phải */
+.navbar-nav {
+    flex-grow: 1; /* Lấp đầy phần còn lại của navbar */
+}
+
+.navbar-nav.ms-auto {
+    margin-left: auto; /* Đẩy phần tử sang bên phải */
+}
+
+.nav-item {
+    margin-left: 10px; /* Thêm khoảng cách giữa các item */
+}
+
+/* Tùy chỉnh button đăng xuất */
+button {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+
+/* Tên tài khoản có màu đỏ và giống button */
+.account-name {
+    background-color: red;   /* Màu nền đỏ */
+    color: white;            /* Màu chữ trắng */
+    border: 1px solid red;   /* Đường viền đỏ */
+    padding: 5px 15px;       /* Khoảng cách trong button */
+    border-radius: 5px;      /* Bo góc */
+    cursor: pointer;         /* Con trỏ chuột khi hover */
+    font-weight: bold;       /* Làm đậm chữ */
+    text-align: center;      /* Canh giữa chữ */
+    display: inline-block;   /* Cho phép hiển thị như một button */
+}
+
+/* Hiệu ứng khi hover */
+.account-name:hover {
+    background-color: darkred;   /* Màu nền đỏ đậm khi hover */
+    border-color: darkred;       /* Đường viền đỏ đậm khi hover */
+}

@@ -40,13 +40,13 @@ const students = [
 function App() {
 
 
-    // const productElements = students.map((student) =>
+    // const productElements = product.map((product) =>
     //     React.createElement(
     //         "div",
     //         { style: {border: "1px solid #ccc", margin: "10px", padding: "10px"}},
-    //         React.createElement("h2", null, student.company),
-    //         React.createElement("p", null, student.contact),
-    //         React.createElement("p", null, student.country),
+    //         React.createElement("h2", null, product.company),
+    //         React.createElement("p", null, product.contact),
+    //         React.createElement("p", null, product.country),
     //     )
     // );
     //

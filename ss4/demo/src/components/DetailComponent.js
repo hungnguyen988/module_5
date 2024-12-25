@@ -5,14 +5,11 @@ import {getAll, searchById} from "../service/student";
 function DetailComponent() {
     const {id} = useParams();
     const studentId = parseInt(id);
-    console.log(studentId)
     const [student, setStudent] = useState(null);
 
     useEffect(() => {
-        console.log('-------effect run -------')
         const fectchData = async () => {
             const studentSearch = await searchById(studentId);
-            console.log(studentSearch)
             setStudent(studentSearch);
         }
         fectchData()

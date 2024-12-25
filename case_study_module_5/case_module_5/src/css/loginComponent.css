@@ -1,0 +1,25 @@
+/* Style cho form */
+form {
+    width: 100%; /* Chiếm 50% chiều rộng */
+    margin: 0 auto; /* Căn giữa form */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/*!* Style cho các input trong form *!*/
+/*input[type="text"], input[type="password"], input[type="submit"] {*/
+/*    width: 50%; !* Đặt độ rộng của input là 100% *!*/
+/*    padding: 10px;*/
+/*    margin: 10px 0;*/
+/*    border-radius: 5px;*/
+/*    border: 1px solid #ccc;*/
+/*}*/
+
+/* Thêm một chút style cho các label */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
+}

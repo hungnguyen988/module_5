@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 50%;
+    max-width: 100%;
+    height: 35px;
+    padding: 5px 10px;
+    margin: 0 auto;  /* Để căn giữa nếu cần */
+    display: block;  /* Để margin auto hoạt động */
+}
+
+
+select.form-control {
+    height: 35px;
+}
+
+.btn-primary {
+    width: 50%;
+    max-width: 100%;
+
+    margin: 0 auto;  /* Để căn giữa nếu cần */
+    display: block;  /* Để margin auto hoạt động */
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
