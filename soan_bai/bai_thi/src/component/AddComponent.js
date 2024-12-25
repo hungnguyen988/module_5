@@ -8,6 +8,7 @@ import '../css/addComponent.css'
 import {addProduct} from "../service/product/ProductService";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {isBefore, isValid, parse} from "date-fns";
 
 export default function AddComponent() {
     const [categories, setCategories] = React.useState([]);
@@ -38,7 +39,16 @@ export default function AddComponent() {
             .matches(/^PROD-\d{4}$/, "Mã phải bắt đầu bằng 'PROD-' và có 4 số"),
         category: Yup.string().required("Loại sản phẩm không được để trống"),
         quantity: Yup.number().required("Số lượng không được để trống").positive("Số lượng phải là số dương"),
-        createAt: Yup.date().required("Ngày tạo không được để trống").max(new Date(), "Ngày tạo không được lớn hơn ngày hiện tại"),
+        createAt: Yup.string()
+            .required("Ngày tạo không được để trống")
+            .test('is-valid-format', "Ngày phải có định dạng dd/MM/yyyy", (value) => {
+                const parsedDate = parse(value, 'dd/MM/yyyy', new Date());
+                return isValid(parsedDate); // Kiểm tra định dạng hợp lệ
+            })
+            .test('is-before-today', "Ngày tạo không được lớn hơn ngày hiện tại", (value) => {
+                const parsedDate = parse(value, 'dd/MM/yyyy', new Date());
+                return isValid(parsedDate) && isBefore(parsedDate, new Date()); // Kiểm tra ngày <= ngày hiện tại
+            }),
     });
     const initialValues = {
         name: '',
@@ -87,7 +97,7 @@ export default function AddComponent() {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="createAt" className="form-label">Ngày nhập:</label>
-                            <Field className="form-control" type="date" name="createAt" id="createAt" />
+                            <Field className="form-control" type="text" name="createAt" id="createAt" />
                             <ErrorMessage name="createAt" component="div" className="text-danger mt-1" />
                         </div>
                         <div className="mb-3">

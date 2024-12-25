@@ -108,7 +108,7 @@ function ListComponent() {
                                 <td>{product.name}</td>
                                 <td className="text-right">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price)}</td>
                                 <td className="text-center">{product.quantity}</td>
-                                <td>{new Date(product.createAt).toLocaleDateString('vi-VN')}</td>
+                                <td>{product.createAt}</td>
                                 <td>{product.category.name}</td>
                             </tr>
                         ))}
